@@ -3,18 +3,17 @@ import {
   Button,
   FormControlLabel,
   FormGroup,
-  Link,
   Slider,
   Switch,
   TextField,
   Toolbar,
   Typography,
 } from "@mui/material";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { ControlState } from "../types/controlState";
 
 const algorithmTypeOptions = [
   "Bubble Sort",
-  "Binary Search",
   "Quicksort",
   "Insertion Sort",
   "Merge Sort",
@@ -27,16 +26,46 @@ function sortSpeedPercentage(value: number) {
   return `${value}%`;
 }
 
-function ControlBar() {
+function ControlBar({
+  controls,
+  setControls,
+}: {
+  controls: ControlState;
+  setControls: React.Dispatch<React.SetStateAction<ControlState>>;
+}) {
   const [algorithmType, setAlgorithmType] = useState<string[]>([
     algorithmTypeOptions[0],
     algorithmTypeOptions[1],
   ]);
+  const [valueRange, setValueRange] = useState<number[]>([20, 100]);
+  const [items, setItems] = useState<number>(50);
+  const [sortSpeed, setSortSpeed] = useState<number>(50);
   const [algorithmTypeInputValue, setAlgorithmTypeInputValue] = useState<
     string[]
   >(["", ""]);
-  const [valueRange, setValueRange] = useState<number[]>([20, 100]);
-  const [compareAlgorithms, setCompareAlgorithms] = useState<boolean>(false);
+  const { visualize, compare, reset } = controls;
+
+  useEffect(() => {
+    setControls({
+      algorithm: algorithmType,
+      valueRange: valueRange,
+      items: items,
+      sortSpeed: sortSpeed,
+      visualize: visualize,
+      compare: compare,
+      reset: reset,
+    });
+    console.log("useEffect triggered");
+  }, [
+    algorithmType,
+    valueRange,
+    items,
+    sortSpeed,
+    visualize,
+    compare,
+    reset,
+    setControls,
+  ]);
 
   const handleValueRangeChange = (
     event: Event,
@@ -61,7 +90,7 @@ function ControlBar() {
   };
 
   const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCompareAlgorithms(event.target.checked);
+    setControls({ ...controls, compare: !compare });
   };
 
   return (
@@ -76,6 +105,7 @@ function ControlBar() {
             backgroundColor: "#1976D2",
             color: "#ffffff",
           }}
+          onClick={() => setControls({ ...controls, visualize: !visualize })}
         >
           Visualize
         </Button>
@@ -96,7 +126,7 @@ function ControlBar() {
           sx={{ width: 300, my: 1.5 }}
           renderInput={(params) => <TextField {...params} label="Algorithm" />}
         />
-        {compareAlgorithms && (
+        {compare && (
           <Autocomplete
             value={algorithmType[1]}
             onChange={(event: any, newValue: string | null) =>
@@ -130,6 +160,11 @@ function ControlBar() {
         </div>
         <div className="input-slider">
           <Slider
+            onChange={(
+              event: Event,
+              value: number | number[],
+              activeThumb: number,
+            ) => setItems(value as number)}
             defaultValue={50}
             valueLabelDisplay="auto"
             min={10}
@@ -139,6 +174,9 @@ function ControlBar() {
         </div>
         <div className="input-slider">
           <Slider
+            onChange={(e, value: number | number[], activeThumb) =>
+              setSortSpeed(value as number)
+            }
             defaultValue={50}
             valueLabelDisplay="auto"
             valueLabelFormat={sortSpeedPercentage}
@@ -147,12 +185,7 @@ function ControlBar() {
         </div>
         <FormGroup>
           <FormControlLabel
-            control={
-              <Switch
-                checked={compareAlgorithms}
-                onChange={handleSwitchChange}
-              />
-            }
+            control={<Switch checked={compare} onChange={handleSwitchChange} />}
             label="COMPARE?"
             labelPlacement="bottom"
           />
@@ -166,6 +199,7 @@ function ControlBar() {
             backgroundColor: "#1976D2",
             color: "#ffffff",
           }}
+          onClick={() => setControls({ ...controls, reset: true })}
         >
           RESET
         </Button>
