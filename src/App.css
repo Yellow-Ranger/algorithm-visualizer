@@ -13,6 +13,7 @@
   padding: 1em;
   display: flex; 
   flex-direction: row;
+  justify-content: center;
 }
 
 #headerTag {
@@ -56,10 +57,17 @@
   background-color: #2d2f3591;
   color: #ffffff;
   display: flex;
-  flex: 1 1 auto;
+  flex: 1;
   justify-content: center;
-  align-items: center;
-  text-align: center;
+  overflow: hidden;
+  /* align-items: center; */
+  /* text-align: center; */
+}
+
+.visualizer-container {
+  max-height: 100%;
+  width: 90%;
+  /* display: flex; */
 }
 
 #visualizeButton:hover {
@@ -71,9 +79,28 @@
   display: flex; 
   flex-direction: row;
   flex: 1 1 auto;
+  justify-content: center;
 }
 
 .input-slider {
   margin-left: 1em;
   margin-right: 1em;
+}
+
+.array-container {
+  overflow-x: scroll;
+  display: flex;
+
+}
+
+.draw-array {
+  /* display: flex; */
+  flex: 1;
+}
+
+.array-el {
+  background-color: red;
+  margin: 0 1px;
+  text-align: center;
+  flex: 1;
 }

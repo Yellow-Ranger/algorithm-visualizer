@@ -37,7 +37,7 @@ function ControlBar({
     algorithmTypeOptions[0],
     algorithmTypeOptions[1],
   ]);
-  const [valueRange, setValueRange] = useState<number[]>([20, 100]);
+  const [valueRange, setValueRange] = useState<number[]>([20, 360]);
   const [items, setItems] = useState<number>(50);
   const [sortSpeed, setSortSpeed] = useState<number>(50);
   const [algorithmTypeInputValue, setAlgorithmTypeInputValue] = useState<
@@ -55,7 +55,6 @@ function ControlBar({
       compare: compare,
       reset: reset,
     });
-    console.log("useEffect triggered");
   }, [
     algorithmType,
     valueRange,
@@ -154,7 +153,7 @@ function ControlBar({
             valueLabelDisplay="auto"
             step={10}
             min={10}
-            max={1000}
+            max={360}
           />
           <Typography gutterBottom>VALUE RANGE</Typography>
         </div>
