@@ -7,5 +7,5 @@ export type ControlState = {
     sortSpeed: number;
     visualize: boolean;
     compare: boolean;
-    reset: boolean;
+    reset: number;
 }

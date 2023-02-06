@@ -198,7 +198,7 @@ function ControlBar({
             backgroundColor: "#1976D2",
             color: "#ffffff",
           }}
-          onClick={() => setControls({ ...controls, reset: true })}
+          onClick={() => setControls({ ...controls, reset: reset + 1 })}
         >
           RESET
         </Button>
