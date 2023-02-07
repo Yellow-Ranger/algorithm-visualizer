@@ -9,7 +9,7 @@ export default function BubbleSort(
   let i, j, temp;
   for (i = 0; i < randomArray.length; i++) {
     for (j = 0; j < randomArray.length - 1; j++) {
-      setStepState({ ...stepState, comparedIndexes: [j, j + 1] });
+      setStepState({ ...stepState, comparedIndexes: [randomArray[j].id, randomArray[j + 1].id] });
       if (randomArray[j].value > randomArray[j + 1].value) {
         temp = randomArray[j];
         randomArray[j] = randomArray[j + 1];
@@ -21,5 +21,5 @@ export default function BubbleSort(
   }
   setStepState({ ...stepState, ordered: true });
 //   console.log("Current Step: ", stepState);
-//   console.log("Bubble Sort");
+  console.log("Bubble Sort");
 }
